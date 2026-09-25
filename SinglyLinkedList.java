@@ -131,8 +131,8 @@ public class SinglyLinkedList<E extends Comparable<E>> {
         }
         
         head = partner.get(original.get(0));
-
         current = head;
+        
         for (int i = 0; i < size; i++) {
             Node<E> nextNode = partner.get(original.get(i));
             current.setNext(nextNode);
