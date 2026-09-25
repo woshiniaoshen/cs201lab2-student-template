@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+
 
 public class SinglyLinkedList<E extends Comparable<E>> {
     private Node<E> head = null;
@@ -101,8 +104,42 @@ public class SinglyLinkedList<E extends Comparable<E>> {
 
     // write your codes here
     public void swap(){
-        
+        if(size <= 1){
+            return;
+        }
+        ArrayList<Node<E>> original = new ArrayList<>();
+        Node<E> current = head;
 
+        while (current != null) {
+            original.add(current);
+            current = current.getNext();
+        }
+
+        ArrayList<Node<E>> sorted = new ArrayList<>(original);
+        sorted.sort(new Comparator<Node<E>>() {
+
+            public int compare(Node<E> a, Node<E> b) {
+
+                return a.getElement().compareTo(b.getElement());
+            }
+        });
+
+        HashMap<Node<E>, Node<E>> partner = new HashMap<>();
+
+        for (int i = 0; i < size; i++) {
+            partner.put(sorted.get(i), sorted.get(size - 1 -i));
+        }
+        
+        head = partner.get(original.get(0));
+
+        current = head;
+        for (int i = 0; i < size; i++) {
+            Node<E> nextNode = partner.get(original.get(i));
+            current.setNext(nextNode);
+            current = nextNode;
+        }
+        tail = current;
+        tail.setNext(null);
     }
    
 }
